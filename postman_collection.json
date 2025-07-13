@@ -1,0 +1,155 @@
+{
+  "info": {
+    "name": "KPA Form Data API",
+    "description": "API collection for bogie checksheets and wheel specifications",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Bogie Checksheet",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bogie_details\": {\n    \"bogie_number\": \"BG001\",\n    \"coach_number\": \"CH001\",\n    \"inspection_date\": \"2025-07-13T10:00:00\",\n    \"inspector_name\": \"John Doe\"\n  },\n  \"bogie_checksheet\": {\n    \"bogie_frame_condition\": \"GOOD\",\n    \"bolster\": \"GOOD\",\n    \"bolster_suspension_bracket\": \"CRACKED\",\n    \"axle_guide\": \"WORN\",\n    \"lower_spring_seat\": \"GOOD\"\n  },\n  \"bmbc_checksheet\": {\n    \"adjusting_tube\": \"DAMAGED\",\n    \"cylinder_body\": \"WORN OUT\",\n    \"piston_trunnion\": \"GOOD\",\n    \"plunger_spring\": \"GOOD\"\n  },\n  \"remarks\": \"Inspection completed successfully\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/forms/bogie-checksheet",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forms", "bogie-checksheet"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Wheel Specifications",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/forms/wheel-specifications",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forms", "wheel-specifications"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Wheel Specifications with Filters",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/forms/wheel-specifications?condition=GOOD&limit=5&offset=0",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forms", "wheel-specifications"],
+          "query": [
+            {
+              "key": "condition",
+              "value": "GOOD"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Wheel Specifications by Coach",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/forms/wheel-specifications?coach_number=CH001",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forms", "wheel-specifications"],
+          "query": [
+            {
+              "key": "coach_number",
+              "value": "CH001"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Wheel Specification",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"wheel_number\": \"WH001\",\n  \"axle_number\": \"AX001\",\n  \"coach_number\": \"CH001\",\n  \"position\": \"LEFT\",\n  \"wheel_diameter\": 915.0,\n  \"rim_thickness\": 28.0,\n  \"flange_height\": 25.0,\n  \"flange_thickness\": 32.0,\n  \"condition\": \"GOOD\",\n  \"wear_pattern\": \"Normal wear\",\n  \"cracks_detected\": false,\n  \"manufacturer\": \"ABC Wheels Ltd\",\n  \"manufacture_date\": \"2024-01-15T00:00:00\",\n  \"material_grade\": \"R7\",\n  \"last_inspection_date\": \"2025-07-01T09:00:00\",\n  \"next_inspection_due\": \"2025-10-01T09:00:00\",\n  \"inspector_name\": \"Jane Smith\",\n  \"load_capacity\": 22500.0,\n  \"speed_rating\": \"200 km/h\",\n  \"remarks\": \"Wheel in excellent condition\",\n  \"status\": \"ACTIVE\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/forms/wheel-specifications",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forms", "wheel-specifications"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Bogie Checksheet (Validation Test)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bogie_details\": {\n    \"bogie_number\": \"\",\n    \"coach_number\": \"CH001\",\n    \"inspection_date\": \"invalid-date\",\n    \"inspector_name\": \"John Doe\"\n  },\n  \"bogie_checksheet\": {\n    \"bogie_frame_condition\": \"INVALID_CONDITION\"\n  },\n  \"bmbc_checksheet\": {}\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/forms/bogie-checksheet",
+          "host": ["{{base_url}}"],
+          "path": ["api", "forms", "bogie-checksheet"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
