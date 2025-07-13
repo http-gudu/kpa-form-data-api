@@ -1,42 +1,64 @@
-# KPA Form Data API
+# 🚄 KPA Form Data API
 
-A FastAPI backend service implementing bogie checksheet and wheel specification management APIs for railway maintenance operations.
+A FastAPI backend service for managing **bogie checksheets** and **wheel specifications** as part of railway maintenance and inspection workflows.
 
-## Features
+This project is built using **FastAPI**, uses **MongoDB Atlas** for data storage, and includes clean API design, validation, and auto-generated documentation.
 
-- **Bogie Checksheet Management**: Create and manage bogie inspection records
-- **Wheel Specifications**: CRUD operations with advanced filtering capabilities
-- **PostgreSQL Integration**: Robust database storage with SQLAlchemy ORM
-- **Input Validation**: Comprehensive data validation using Pydantic schemas
-- **Auto-generated Documentation**: Swagger UI and ReDoc available
-- **RESTful API Design**: Following REST principles with proper HTTP status codes
+---
 
-## API Endpoints
+## ✅ Features
 
-### 1. POST /api/forms/bogie-checksheet
-Creates a new bogie checksheet entry with inspection data.
+- 🔧 **MongoDB Atlas Integration** using `motor` (async driver)
+- 📄 **Bogie Checksheet API** – create and manage bogie inspections
+- ⚙️ **Wheel Specification API** – add and filter wheel data with pagination
+- 🛡 **Validation** – input validation with Pydantic schemas
+- 🌐 **Auto Docs** – Swagger UI (`/docs`) and Redoc (`/redoc`)
+- 💡 **RESTful API** – uses proper status codes and clear endpoints
 
-**Request Body:**
-```json
-{
-  "bogie_details": {
-    "bogie_number": "BG001",
-    "coach_number": "CH001",
-    "inspection_date": "2025-07-13T10:00:00",
-    "inspector_name": "John Doe"
-  },
-  "bogie_checksheet": {
-    "bogie_frame_condition": "GOOD",
-    "bolster": "GOOD",
-    "bolster_suspension_bracket": "CRACKED",
-    "axle_guide": "WORN",
-    "lower_spring_seat": "GOOD"
-  },
-  "bmbc_checksheet": {
-    "adjusting_tube": "DAMAGED",
-    "cylinder_body": "WORN OUT",
-    "piston_trunnion": "GOOD",
-    "plunger_spring": "GOOD"
-  },
-  "remarks": "Inspection completed successfully"
-}
+---
+
+## 📦 Technology Stack
+
+| Tool/Library     | Purpose                          |
+|------------------|----------------------------------|
+| FastAPI          | Web API Framework (async)        |
+| Motor            | MongoDB Driver (async)           |
+| Pydantic         | Data validation                  |
+| Python Dotenv    | Environment variable management  |
+| Uvicorn          | ASGI server                      |
+
+---
+
+## 🔐 Setup Instructions
+
+###1. Clone the repository
+
+```bash
+git clone https://github.com/yourname/kpa-form-api.git
+cd kpa-form-api
+###2. Setup virtual environment
+bash
+Copy
+Edit
+python -m venv venv
+venv\Scripts\activate  # On Windows
+3. Install dependencies
+bash
+Copy
+Edit
+pip install -r requirements.txt
+4. Configure .env file
+env
+Copy
+Edit
+MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/kpa_db?retryWrites=true&w=majority
+5. Run the server
+bash
+Copy
+Edit
+uvicorn app.main:app --reload
+Visit:
+
+Swagger Docs → http://localhost:8000/docs
+
+ReDoc UI → http://localhost:8000/redoc

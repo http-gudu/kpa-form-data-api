@@ -1,31 +1,19 @@
+import motor.motor_asyncio
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
+from dotenv import load_dotenv
 
-# Get database URL from environment variables
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5432/kpa_forms")
+# Load environment variables from .env file
+load_dotenv()
 
-# Create SQLAlchemy engine
-engine = create_engine(
-    DATABASE_URL,
-    poolclass=StaticPool,
-    pool_pre_ping=True,
-    pool_recycle=300,
-    echo=True  # Set to False in production
-)
+# MongoDB Atlas URI from environment
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 
-# Create SessionLocal class
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# Create MongoDB client
+client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
 
-# Create Base class
-Base = declarative_base()
+# Access your MongoDB database
+db = client.kpa_db
 
-# Dependency to get database session
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# Collections
+forms_collection = db.forms
+responses_collection = db.responses

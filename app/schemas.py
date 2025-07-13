@@ -1,9 +1,9 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional, List
 from enum import Enum
 
-# Enums for validation
+# Enums
 class ConditionEnum(str, Enum):
     GOOD = "GOOD"
     WORN_OUT = "WORN OUT"
@@ -47,7 +47,7 @@ class BogieChecksheetCreate(BaseModel):
     remarks: Optional[str] = None
 
 class BogieChecksheetResponse(BaseModel):
-    id: int
+    id: Optional[str]
     created_at: datetime
     bogie_number: str
     coach_number: str
@@ -64,9 +64,6 @@ class BogieChecksheetResponse(BaseModel):
     plunger_spring: Optional[str]
     remarks: Optional[str]
     overall_status: str
-
-    class Config:
-        from_attributes = True
 
 # Wheel Specification Schemas
 class WheelSpecificationCreate(BaseModel):
@@ -93,7 +90,7 @@ class WheelSpecificationCreate(BaseModel):
     status: Optional[StatusEnum] = StatusEnum.ACTIVE
 
 class WheelSpecificationResponse(BaseModel):
-    id: int
+    id: Optional[str]
     created_at: datetime
     updated_at: datetime
     wheel_number: str
@@ -118,10 +115,7 @@ class WheelSpecificationResponse(BaseModel):
     remarks: Optional[str]
     status: Optional[str]
 
-    class Config:
-        from_attributes = True
-
-# Query Parameters
+# Filters for query
 class WheelSpecificationFilters(BaseModel):
     wheel_number: Optional[str] = None
     coach_number: Optional[str] = None
@@ -131,7 +125,7 @@ class WheelSpecificationFilters(BaseModel):
     limit: Optional[int] = Field(10, ge=1, le=100)
     offset: Optional[int] = Field(0, ge=0)
 
-# API Response Models
+# API response models
 class APIResponse(BaseModel):
     success: bool
     message: str
